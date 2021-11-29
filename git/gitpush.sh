@@ -12,9 +12,14 @@ fi
 cb=$(git branch | sed -n '/\* /s///p')
 
 # Git
-git add .
-git commit -m "$msg"
-git pull origin $cb
+git commit -am "$msg"
+# 拉取是否冲突
+cpmsg=$(git pull origin $cb)
+if [[ $cpmsg =~ "冲突" || $cpmsg =~ "CONFLICT" ]]
+then
+  echo "\033[1;31m============================== 合并冲突 pull $cb ==============================\033[0m"
+fi
+echo $cpmsg
 git push origin $cb
 
 # 结束

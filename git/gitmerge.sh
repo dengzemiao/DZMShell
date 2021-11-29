@@ -15,18 +15,29 @@ fi
 cb=$(git branch | sed -n '/\* /s///p')
 
 # Git
-git add .
-git commit -m "$msg"
-git pull origin $cb
+git commit -am "$msg"
+# 拉取是否冲突
+cpmsg=$(git pull origin $cb)
+if [[ $cpmsg =~ "冲突" || $cpmsg =~ "CONFLICT" ]]
+then
+  echo "\033[1;31m============================== 合并冲突 pull $cb ==============================\033[0m"
+fi
+echo $cpmsg
+# 正常操作
 git push origin $cb
 git checkout $tb
-git pull origin $tb
+# 拉取是否冲突
+tpmsg=$(git pull origin $tb)
+if [[ $tpmsg =~ "冲突" || $tpmsg =~ "CONFLICT" ]]
+then
+  echo "\033[1;31m============================== 合并冲突 pull $tb ==============================\033[0m"
+fi
+echo $tpmsg
 # 合并是否冲突
 mmsg=$(git merge $cb)
-mr=$(echo $mmsg | grep "冲突")
-if [[ "$mr" != "" ]]
+if [[ $mmsg =~ "冲突" || $mmsg =~ "CONFLICT" ]]
 then
-  echo "\033[1;31m============================== 合并冲突 ==============================\033[0m"
+  echo "\033[1;31m============================== 合并冲突 merge $cb ==============================\033[0m"
 fi
 echo $mmsg
 git push origin $tb
