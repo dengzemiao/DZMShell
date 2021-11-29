@@ -25,23 +25,28 @@ fi
 echo $cpmsg
 # 正常操作
 git push origin $cb
-git checkout $tb
-# 拉取是否冲突
-tpmsg=$(git pull origin $tb)
-if [[ $tpmsg =~ "冲突" || $tpmsg =~ "CONFLICT" ]]
+
+# 当前分支不是合并目标分支
+if [ $cb != $tb ]
 then
-  echo "\033[1;31m============================== 合并冲突 pull $tb ==============================\033[0m"
+  git checkout $tb
+  # 拉取是否冲突
+  tpmsg=$(git pull origin $tb)
+  if [[ $tpmsg =~ "冲突" || $tpmsg =~ "CONFLICT" ]]
+  then
+    echo "\033[1;31m============================== 合并冲突 pull $tb ==============================\033[0m"
+  fi
+  echo $tpmsg
+  # 合并是否冲突
+  mmsg=$(git merge $cb)
+  if [[ $mmsg =~ "冲突" || $mmsg =~ "CONFLICT" ]]
+  then
+    echo "\033[1;31m============================== 合并冲突 merge $cb ==============================\033[0m"
+  fi
+  echo $mmsg
+  git push origin $tb
+  git checkout $cb
 fi
-echo $tpmsg
-# 合并是否冲突
-mmsg=$(git merge $cb)
-if [[ $mmsg =~ "冲突" || $mmsg =~ "CONFLICT" ]]
-then
-  echo "\033[1;31m============================== 合并冲突 merge $cb ==============================\033[0m"
-fi
-echo $mmsg
-git push origin $tb
-git checkout $cb
 
 # 结束
 echo "\033[1;32m============================== end merge ==============================\033[0m"
