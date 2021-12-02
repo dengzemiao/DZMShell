@@ -14,11 +14,16 @@ cb=$(git branch | sed -n '/\* /s///p')
 # Git
 git add .
 git commit -m "$msg"
-# 拉取是否冲突
+# 拉取冲突
 cpmsg=$(git pull origin $cb)
 if [[ $cpmsg =~ "冲突" || $cpmsg =~ "CONFLICT" ]]
 then
   echo "\033[1;31m============================== 合并冲突 pull $cb ==============================\033[0m"
+fi
+# 拉取失败
+if [[ $cpmsg =~ "fatal" ]]
+then
+  echo "\033[1;31m============================== 拉取失败 pull $cb ==============================\033[0m"
 fi
 echo $cpmsg
 git push origin $cb
