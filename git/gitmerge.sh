@@ -15,7 +15,8 @@ fi
 cb=$(git branch | sed -n '/\* /s///p')
 
 # Git
-git commit -am "$msg"
+git add .
+git commit -m "$msg"
 # 拉取是否冲突
 cpmsg=$(git pull origin $cb)
 if [[ $cpmsg =~ "冲突" || $cpmsg =~ "CONFLICT" ]]
