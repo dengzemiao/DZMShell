@@ -15,13 +15,13 @@ cb=$(git branch | sed -n '/\* /s///p')
 git add .
 git commit -m "$msg"
 # 拉取冲突
-cpmsg=$(git pull origin $cb)
+cpmsg="SSL_ERROR_SYSCALL"#$(git pull origin $cb)
 if [[ $cpmsg =~ "冲突" || $cpmsg =~ "CONFLICT" ]]
 then
   echo "\033[1;31m============================== 合并冲突 pull $cb ==============================\033[0m"
 fi
 # 拉取失败
-if [[ $cpmsg =~ "fatal" ]]
+if [[ $cpmsg =~ "fatal" ] || [ $cpmsg =~ "失败" ] || [ $cpmsg =~ "error" ]]
 then
   echo "\033[1;31m============================== 拉取失败 pull $cb ==============================\033[0m"
 fi
