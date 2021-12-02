@@ -16,6 +16,7 @@ git add .
 git commit -m "$msg"
 # 拉取冲突
 cpmsg="SSL_ERROR_SYSCALL"#$(git pull origin $cb)
+echo $cpmsg =~ "error"
 if [[ $cpmsg =~ "冲突" || $cpmsg =~ "CONFLICT" ]]
 then
   echo "\033[1;31m============================== 合并冲突 pull $cb ==============================\033[0m"
