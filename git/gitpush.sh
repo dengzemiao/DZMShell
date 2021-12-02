@@ -25,7 +25,7 @@ if [[ $cpmsg =~ "fatal" || $cpmsg =~ "ERROR" ]]
 then
   echo "\033[1;31m============================== 拉取失败 pull $cb ==============================\033[0m"
 fi
-echo $cpmsg
+echo "234234234-------"$cpmsg
 git push origin $cb
 
 # 结束
