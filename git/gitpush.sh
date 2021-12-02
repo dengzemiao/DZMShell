@@ -14,6 +14,7 @@ cb=$(git branch | sed -n '/\* /s///p')
 # Git
 git add .
 git commit -m "$msg"
+echo "234234234-------"
 # 拉取冲突
 cpmsg=$(git pull origin $cb)
 if [[ $cpmsg =~ "冲突" || $cpmsg =~ "CONFLICT" ]]
