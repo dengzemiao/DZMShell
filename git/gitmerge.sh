@@ -23,7 +23,7 @@ if [[ $cpmsg =~ "冲突" || $cpmsg =~ "CONFLICT" ]]
 then
   echo "\033[1;31m============================== 合并冲突 pull $cb ==============================\033[0m"
 fi
-echo $cpmsg
+echo "$cpmsg"
 # 正常操作
 git push origin $cb
 
@@ -37,14 +37,14 @@ then
   then
     echo "\033[1;31m============================== 合并冲突 pull $tb ==============================\033[0m"
   fi
-  echo $tpmsg
+  echo "$tpmsg"
   # 合并冲突
   mmsg=$(git merge $cb)
   if [[ $mmsg =~ "冲突" || $mmsg =~ "CONFLICT" ]]
   then
     echo "\033[1;31m============================== 合并冲突 merge $cb ==============================\033[0m"
   fi
-  echo $mmsg
+  echo "$mmsg"
   git push origin $tb
   git checkout $cb
 fi
